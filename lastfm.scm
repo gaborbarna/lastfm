@@ -5,7 +5,7 @@
 (require openssl/sha1)
 (require racket/fasl)
 
-(define cache-dir "/home/lesbroot/etc/cache/")
+(define cache-dir "./cache/")
 (define api-url "http://ws.audioscrobbler.com/2.0/")
 (define api-key (cons 'api_key "79307c3a527388d5c47a44c63ddf2a46"))
 (define method-info (cons 'method "artist.getinfo"))
@@ -52,13 +52,13 @@
             [else (begin (cond [(not (eq? (first msg) #f))
                                 (write-to-file (rest msg) (first msg))])
                          (display-message (rest msg))
-                         (newline)
                          (loop))])))
   (loop))
 
 (define (display-message msg)
   (displayln (first msg))
-  (displayln (take (rest msg) 6)))
+  (displayln (take (rest msg) 6))
+  (newline))
 
 (define (read-from-file path)
   (let* ([in (open-input-file path)]
